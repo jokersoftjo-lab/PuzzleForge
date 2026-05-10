@@ -1,20 +1,18 @@
-#include <QApplication>
-
-#include "mainwindow.h"
-
+#include "editor/windows/MainEditorWindow.h"
 #include "engine/core/Engine.h"
 
-int main(int argc, char *argv[])
-{
-    QApplication app(argc, argv);
+#include <QApplication>
 
-    Engine engine;
+int main(int argc, char *argv[]) {
+  QApplication app(argc, argv);
 
-    engine.initialize();
+  PuzzleForge::EngineCore::Engine engine;
+  engine.initialize();
 
-    MainWindow window;
+  PuzzleForge::Editor::MainEditorWindow window(engine);
+  window.show();
 
-    window.show();
-
-    return app.exec();
+  const int exitCode = app.exec();
+  engine.shutdown();
+  return exitCode;
 }
